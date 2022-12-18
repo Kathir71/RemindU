@@ -1,10 +1,13 @@
 import Navbar from "../components/Navbar";
+import TaskComponent from "../components/taskComponent";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 const HomePage = () => {
   const [userTasks, setUserTasks] = useState([]);
   const [addMode, setAddMode] = useState(false);
   const taskStringRef = useRef(0);
+  const taskDateRef = useRef(0);
+  const taskTimeRef = useRef(0);
   const userId = sessionStorage.getItem("userId");
   useEffect(() => {
     fetchData();
@@ -16,8 +19,8 @@ const HomePage = () => {
     console.log(url);
     if (userId !== null) {
       axios.get(url).then((response) => {
-        setUserTasks(response.data[0].tasks);
-        console.log(response.data[0].tasks);
+        setUserTasks(response.data.userTasks);
+        console.log(response.data.userTasks);
       });
     }
   };
@@ -27,18 +30,21 @@ const HomePage = () => {
   };
   const handleAddTask = (e) => {
     e.preventDefault();
+    console.log(taskDateRef.current.value);
+    console.log(taskTimeRef.current.value);
     axios
       .post("http://localhost:8090/addTask", {
         userId: userId,
         taskString: taskStringRef.current.value,
+        taskDate:taskDateRef.current.value +"T"+ taskTimeRef.current.value
       })
       .then((response) => {
         console.log(response);
-      fetchData();
-    setAddMode(false);
+        fetchData();
+        setAddMode(false);
       });
   };
-  if (userTasks.length === 0) {
+  if (userTasks === null) {
     return "Login";
   } else
     return (
@@ -47,12 +53,15 @@ const HomePage = () => {
           className="btn btn-primary"
           onClick={(e) => handleAddTaskClick(e)}
         >
-          {" "}
           Add task
         </button>
-        {userTasks.map((task) => {
-          return <p>{task}</p>;
-        })}
+        {
+            userTasks.map((task) => {
+                return (
+                <TaskComponent key={task._id} task={task} userId={userId} setUserTasks={setUserTasks}/>
+                )
+            })
+        }
         <div className={addMode ? "d-block" : "d-none"}>
           <form onSubmit={(e) => handleAddTask(e)}>
             <input
@@ -61,6 +70,8 @@ const HomePage = () => {
               id="taskString"
               ref={taskStringRef}
             />
+            <input type="date" name="tdate" id="tdate" ref = {taskDateRef} />
+            <input type="time" name="ttime" id="ttime" ref = {taskTimeRef} />
             <input type="submit" value="Add Task" />
           </form>
         </div>
