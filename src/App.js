@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Homepage from "./pages/homepage"
+import TaskPage from './pages/taskpage';
 import AboutUs from './pages/aboutus';
 import SignUp from './pages/signup';
 import Login from './pages/login';
@@ -32,6 +33,7 @@ const AllRoutes = () => {
       <Route path="/about" element={<AboutUs />} />
       <Route path = "/signup" element={<SignUp />} />
       <Route path = "/login" element = {<Login />} />
+      <Route path="/tasks" element = {<TaskPage/>}/>
     </Routes>
   )
 

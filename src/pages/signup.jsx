@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {useRef} from "react";
+import {Link} from 'react-router-dom'
+import styles from "./Signup.module.css"
 const SignUp = () => {
     const nameRef = useRef(0);
     const emailRef = useRef(0);
@@ -20,17 +22,17 @@ const SignUp = () => {
 
     }
     return (
-    <>
-        <div className="card">
-            <h1>Sign Up</h1>
-            <form onSubmit={e => handleformSubmit(e)}>
-                <input ref={nameRef} type="text" name="uname" id="uname" />
-                <input ref ={emailRef}type="text" name="uemail" id="email" />
-                <input ref = {passwdRef} type="password" name="upasswd" id="upasswd" />
-                <input type="submit" value="Sign Up" />
+    <div className={`${styles.bodyWrapper}`}>
+        <div className={styles.mycard}>
+            <form className = {`${styles.signupForm}`}onSubmit={e => handleformSubmit(e)}>
+                <input className={`${styles.inputElement}`} ref={nameRef} type="text" name="uname" id="uname" placeholder='Name' autoComplete='off'/>
+                <input className={`${styles.inputElement}`} ref ={emailRef}type="text" name="uemail" id="email" placeholder='Email' autoComplete='off'/>
+                <input className={`${styles.inputElement}`} ref = {passwdRef} type="password" name="upasswd" id="upasswd" placeholder='Password'autoComplete='off' />
+                <input className={styles.neonButton}type="submit" value="Sign Up" />
+                <p className={styles.text}>Already Signed up? <Link to="/login">Login</Link></p>
             </form>
         </div>
-    </>
+        </div>
     )
 }
 export default SignUp;

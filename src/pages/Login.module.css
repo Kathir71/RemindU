@@ -1,0 +1,100 @@
+.bodyWrapper {
+    background-color: #0F1527;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mycard {
+    width: 40%;
+}
+
+.loginForm {
+    padding: 2rem;
+    background-color: rgb(15, 16, 56);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: rgb(15,170,236) 0.125em solid;
+    box-shadow: inset 0 0 0.5em 0 #0faaec,0 0 0.5em 0 rgb(15,170,236);
+    position: relative;
+}
+
+.inputElement {
+    display: inline-block;
+    width: 75%;
+    background-color: black;
+    color: white;
+    border: none;
+    margin-block: 0.7rem;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.neonButton {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    color: rgb(15, 170, 236);
+    border: rgb(15,170,236) 0.125em solid;
+    padding: 0.25em 1em;
+    border-radius: 0.25em;
+    text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
+    box-shadow: inset 0 0 0.5em 0 rgb(15,170,236),0 0 0.5em 0 rgb(15,170,236);
+    position: relative;
+    background-color: inherit;
+    font-size:1.2rem;
+}
+
+.neonButton::before  {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    background: rgb(15,170,236);
+    top: 120%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
+    filter: blur(1em);
+    opacity: 0.7;
+}
+
+.neonButton::after  {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 0 2em 0.5em rgb(15,170,236);
+    opacity: 0;
+    background-color: rgb(15,170,236);
+    z-index: -1;
+    transition: opacity 100ms linear;
+}
+
+.neonButton:hover,
+.neonButton:focus {
+    text-shadow: none;
+}
+
+.neonButton:hover::before,
+.neonButton:focus::before {
+    opacity: 1;
+}
+
+.neonButton:hover::after,
+.neonButton:focus::after {
+    opacity: 1;
+}
+.text {
+    color: white;
+    margin-top:10px;
+    font-size: 1.05rem;
+}

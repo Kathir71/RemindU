@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+.bodyWrapper {
+    background-color: #0F1527;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+.heroText {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+}
+.heroText > * {
+    margin-left: 4rem;
+}
+.heroText p {
+    font-family: "Raleway";
+    font-size: 1.5rem;
+}
+.heroTitle {
+    font-size: 4rem;
+    font-family: "Montserrat";
+    color: rgb(193, 204, 241);
+}
+.heroImg img {
+    width: 100%;
+    height: 80vh;
+    object-fit: contain;
+}
+.textTyping {
+font-size:1.2rem;
+font-family:monospace;
+width: fit-content;
+}
+.textTypingText {
+margin:0px;
+color:rgb(84, 71, 120);
+white-space:nowrap;
+overflow:hidden;
+animation:typing 3s steps(22,end) forwards,
+blink 1s infinite;
+}
+.getStartedBtn {
+    display: inline-block;
+    border:none;
+    background-color: rgb(15,150,236);
+    background-color: #0F1527;
+    color:rgb(240,240,240);
+    padding-block:1rem;
+    padding-inline: 0.75rem;
+    font-size: 1.2rem;
+    border: none;
+    outline: none;
+    /* background: #111; */
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    margin-top:20px;
+}
+
+.getStartedBtn:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 1;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.getStartedBtn:active {
+    color: #000
+}
+
+.getStartedBtn:active:after {
+    background: transparent;
+}
+
+.getStartedBtn:hover:before {
+    opacity: 1;
+}
+
+.getStartedBtn:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgb(30,150,200);
+    background-color: #0F1527;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+
+@keyframes typing {
+0% { width:0% }
+100% { width:100% }
+}
+@keyframes blink {
+0%,100% {
+border-right:2px solid transparent;
+}
+50% {
+border-right:2px solid rgb(245, 240, 240);
+}
+}
