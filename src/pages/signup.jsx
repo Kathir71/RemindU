@@ -1,11 +1,12 @@
 import axios from 'axios';
-import {useRef} from "react";
+import {useRef , useState} from "react";
 import {Link} from 'react-router-dom'
 import styles from "./Signup.module.css"
 const SignUp = () => {
     const nameRef = useRef(0);
     const emailRef = useRef(0);
     const passwdRef = useRef(0);
+    const [errorState , setErrorState] = useState(false);
     const handleformSubmit = (e) => {
         e.preventDefault();
         let uname = nameRef.current.value;
@@ -18,8 +19,12 @@ const SignUp = () => {
             userpasswd:upasswd
         }).then((response) => {
             console.log(response);
+            sessionStorage.clear();
+            sessionStorage.setItem("userId" , response.data._id);
+            window.location.href="/tasks";
+        }).catch((err) => {
+            console.log(err.message);
         })
-
     }
     return (
     <div className={`${styles.bodyWrapper}`}>
