@@ -6,7 +6,7 @@ const SignUp = () => {
     const nameRef = useRef(0);
     const emailRef = useRef(0);
     const passwdRef = useRef(0);
-    const [errorState , setErrorState] = useState(false);
+    const [errorString , setErrorString] = useState(null);
     const handleformSubmit = (e) => {
         e.preventDefault();
         let uname = nameRef.current.value;
@@ -24,6 +24,7 @@ const SignUp = () => {
             window.location.href="/tasks";
         }).catch((err) => {
             console.log(err.message);
+            setErrorString("Email has been already taken");
         })
     }
     return (
@@ -35,6 +36,7 @@ const SignUp = () => {
                 <input className={`${styles.inputElement}`} ref = {passwdRef} type="password" name="upasswd" id="upasswd" placeholder='Password'autoComplete='off' />
                 <input className={styles.neonButton}type="submit" value="Sign Up" />
                 <p className={styles.text}>Already Signed up? <Link to="/login">Login</Link></p>
+                <div style={{background:"red"}}>{errorString}</div>
             </form>
         </div>
         </div>
