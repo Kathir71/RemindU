@@ -1,14 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,600');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital@1&display=swap');
-.myNavBar {
-    background-color: #121d39;
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
-body{
-    overflow-y: hidden;
-}
+/* navigation styles start here */
 .navBarBrand{
     color:white;
     text-decoration:none;
-    font-size:1.5rem;
+    font-size:2.5rem;
     font-family: "Montserrat";
     font-weight: bolder;
     margin-inline:20px;
@@ -17,24 +19,116 @@ body{
     color:white;
     cursor: pointer;
 }
-.navGrp {
+header {
+    background-color: #121d39;
+    text-align: center;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+}
+
+.navToggle {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+.navToggle:focus ~ .navToggleLabel {
+    outline: 3px solid rgba(lightblue, .75);
+}
+
+.navToggleLabel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 1em;
+    height: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items:center; 
+    align-items: center;
+    width: 100px;
 }
-.navItem {
-    display: inline-block;
-    font-size:1.15rem;
-    margin-inline:0.5rem;   
+
+.navToggleLabel span,
+.navToggleLabel span::before,
+.navToggleLabel span::after {
+    display: block;
+    background: rgb(86, 14, 255);
+    height: 2px;
+    width: 2em;
+    border-radius: 2px;
+    position: relative;
 }
-.navLink {
+
+.navToggleLabel span::before,
+.navToggleLabel span::after {
+    content: '';
+    position: absolute;
+}
+
+.navToggleLabel span::before {
+    bottom: 7px;
+}
+
+.navToggleLabel span::after {
+    top: 7px;
+}
+
+nav {
+    position: absolute;
+    text-align: left;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #121d39;
+    transform: scale(1, 0);
+    transform-origin: top;
+    transition: transform 400ms ease-in-out;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav li {
+    margin-bottom: 1em;
+    margin-left: 1em;
+    display: flex;
+    align-items: center ;
+}
+
+.link{
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
     color:white;
     text-decoration: none;
     font-family: "Montserrat";
 }
+
+/* nav a:hover { */
+    /* color: rgb(69, 48, 255); */
+/* } */
+
+.navToggle:checked~nav {
+    transform: scale(1, 1);
+}
+
+.navToggle:checked~nav a {
+    opacity: 1;
+    transition: opacity 250ms ease-in-out 250ms;
+}
+.linkButton {
+    text-decoration: none;
+    color:white;
+    font-family: 'Montserrat';
+}
 .neonButton {
-    display: inline-block;
+    /* display: inline-block; */
     cursor: pointer;
     text-decoration: none;
     color: rgb(15, 170, 236);
@@ -46,4 +140,68 @@ body{
     position: relative;
     background-color: inherit;
     font-size:1.2rem;
+}
+
+@media screen and (min-width: 800px) {
+    .navToggleLabel {
+        display: none;
+    }
+
+    header {
+        display: grid;
+        grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+    }
+
+    .logo {
+        grid-column: 2 / 3;
+    }
+
+    nav {
+
+        /* the following lines are not from my video, but add Edge support */
+        position: relative;
+        text-align: left;
+        transition: none;
+        transform: scale(1, 1);
+        background: none;
+        top: initial;
+        left: initial;
+        /* end Edge support stuff */
+
+        grid-column: 3 / 4;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    nav ul {
+        display: flex;
+    }
+
+    nav li {
+        margin-left: 3em;
+        margin-bottom: 0;
+    }
+
+    .link {
+        opacity: 1;
+        position: relative;
+    }
+
+    .link::before {
+        content: '';
+        display: block;
+        height: 5px;
+        background: rgb(0, 94, 255);
+        position: absolute;
+        top: -.75em;
+        left: 0;
+        right: 0;
+        transform: scale(0, 1);
+        transition: transform ease-in-out 250ms;
+    }
+
+    .link:hover::before {
+        transform: scale(1, 1);
+    }
 }
