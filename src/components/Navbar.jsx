@@ -1,8 +1,21 @@
+import { useContext } from "react";
+import { Link  , useNavigate} from "react-router-dom";
+
+import { AuthContext } from "../contexts/Authcontext";
+
 import styles from "./Navbar.module.css";
-import { Link } from "react-router-dom";
 const Navbar = () => {
+  const {auth , setAuth , setUser} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLogout = () =>{
+    setAuth(false);
+    setUser(false);
+    sessionStorage.clear();
+    navigate("/");
+  }
   return (
-    <header>
+    <>
+    <div className={styles.header}>
       <h1 className={styles.logo}>
         <Link className={styles.navBarBrand} to="/">
           RemindU
@@ -21,6 +34,7 @@ const Navbar = () => {
               About Us
             </Link>
           </li>
+          {auth ===false ?<>
           <li>
             <button className={styles.neonButton}>
               <Link className={styles.linkButton} to="/signup">
@@ -35,12 +49,22 @@ const Navbar = () => {
               </Link>
             </button>
           </li>
+          </>:
+          <>
+          <li>
+            <button className={styles.neonButton} onClick={e => handleLogout(e)}>
+              Logout
+            </button>
+          </li>
+          </>
+          }
         </ul>
       </nav>
       <label htmlFor="nav-toggle" className={styles.navToggleLabel}>
         <span></span>
       </label>
-    </header>
+    </div>
+    </>
   );
 };
 export default Navbar;

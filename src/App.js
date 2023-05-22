@@ -1,5 +1,7 @@
+
+import {useState , useContext,useEffect} from 'react';
+
 import logo from './logo.svg';
-import './App.css';
 import Homepage from "./pages/homepage"
 import TaskPage from './pages/taskpage';
 import AboutUs from './pages/aboutus';
@@ -14,14 +16,18 @@ Routes,
 Route,
 Link
 } from 'react-router-dom';
-import {useState , useContext,useEffect} from 'react';
+
+import './App.css';
+import { AuthProvider } from './contexts/Authcontext';
 function App() {
   const [user , setUser] = useState(null);
   return (
     <>
     <Router>
+      <AuthProvider>
       <Navbar/>
       <AllRoutes/>
+      </AuthProvider>
     </Router>
     </>
   );

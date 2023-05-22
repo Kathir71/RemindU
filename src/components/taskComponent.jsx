@@ -14,6 +14,7 @@ const TaskComponent = (props) => {
     dateString.length
   );
   const [editMode, setEditMode] = useState(false);
+  const [errorState , setErrorState] = useState(false);
   const taskStringRef = useRef(0);
   const taskDateRef = useRef(0);
   const taskTimeRef = useRef(0);
@@ -36,7 +37,10 @@ const TaskComponent = (props) => {
         console.log(setUserTasks);
         console.log(response.data);
         setUserTasks(response.data.userTasks);
-      });
+      }).catch((err) => {
+        console.log(err);
+        setErrorState("Invalid date and time");
+      })
   };
   const handleDelete = (e) => {
     e.preventDefault();
@@ -53,7 +57,6 @@ const TaskComponent = (props) => {
   return (
     <>
       <div className={styles.taskContainer}>
-        {/* <div className={editMode ? "d-none" : `d-block ${styles.textGrp}`}> */}
         <div className={styles.textGrp}>
             <div><p className={styles.styledText}>{taskString}</p></div>
             <div> <BsFillCalendar2WeekFill style={{color:"rgb(240,240,240)",fontSize:"1.3rem"}}/> <p className={styles.styledText}>{dateAlone}</p></div>
@@ -105,6 +108,7 @@ const TaskComponent = (props) => {
           <button type="submit" className={styles.confirmBtn} > Confirm </button>
         </form>
       </div>
+
     </>
   );
 };

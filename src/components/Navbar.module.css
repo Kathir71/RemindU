@@ -1,11 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:300,600');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital@1&display=swap');
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
 /* navigation styles start here */
 .navBarBrand{
     color:white;
@@ -19,12 +14,13 @@
     color:white;
     cursor: pointer;
 }
-header {
+.header {
     background-color: #121d39;
     text-align: center;
-    position: fixed;
-    z-index: 999;
     width: 100%;
+    margin: 0px;
+    position: relative;
+    border:1px solid #121d39
 }
 
 .navToggle {
@@ -147,9 +143,14 @@ nav li {
         display: none;
     }
 
-    header {
-        display: grid;
-        grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+    .header {
+        /* display: grid; */
+        /* grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr; */
+        display: flex;;
+        align-items: center;
+        justify-content: space-around;
+        margin:0px;
+        position: relative;
     }
 
     .logo {
@@ -167,7 +168,6 @@ nav li {
         top: initial;
         left: initial;
         /* end Edge support stuff */
-
         grid-column: 3 / 4;
         display: flex;
         justify-content: flex-end;

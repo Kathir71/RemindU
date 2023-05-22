@@ -1,45 +1,91 @@
-import axios from 'axios';
-import {useRef , useState} from "react";
-import {Link} from 'react-router-dom'
-import styles from "./Signup.module.css"
+import axios from "axios";
+import { useRef, useState} from "react";
+import { Link , useNavigate} from "react-router-dom";
+import styles from "./Signup.module.css";
+import Loaders from "../components/Loaders";
 const SignUp = () => {
-    const nameRef = useRef(0);
-    const emailRef = useRef(0);
-    const passwdRef = useRef(0);
-    const [errorString , setErrorString] = useState(null);
-    const handleformSubmit = (e) => {
-        e.preventDefault();
-        let uname = nameRef.current.value;
-        let uemail = emailRef.current.value;
-        let upasswd = passwdRef.current.value;
-        console.log(`The username is ${uname} email: ${uemail} passwd: ${upasswd}`);
-        axios.post("http://localhost:8090/user/signup" , {
-            username:uname,
-            useremail:uemail,
-            userpasswd:upasswd
-        }).then((response) => {
-            console.log(response);
-            sessionStorage.clear();
-            sessionStorage.setItem("userId" , response.data._id);
-            window.location.href="/tasks";
-        }).catch((err) => {
-            console.log(err.message);
-            setErrorString("Email has been already taken");
-        })
-    }
-    return (
+  const nameRef = useRef(0);
+  const emailRef = useRef(0);
+  const passwdRef = useRef(0);
+  const navigate = useNavigate();
+  const [errorString, setErrorString] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const handleformSubmit = (e) => {
+    e.preventDefault();
+    let uname = nameRef.current.value;
+    let uemail = emailRef.current.value;
+    let upasswd = passwdRef.current.value;
+    console.log(`The username is ${uname} email: ${uemail} passwd: ${upasswd}`);
+    setLoading(true);
+    axios
+      .post("http://localhost:8090/user/signup", {
+        username: uname,
+        useremail: uemail,
+        userpasswd: upasswd,
+      })
+      .then((response) => {
+        console.log(response);
+        sessionStorage.clear();
+        sessionStorage.setItem("userId", response.data._id);
+        setLoading(false);
+        navigate("/tasks");
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setErrorString("Email has been already taken");
+        setLoading(false);
+      });
+  };
+  return (
     <div className={`${styles.bodyWrapper}`}>
+      {loading ? (
+        <Loaders />
+      ) : (
         <div className={styles.mycard}>
-            <form className = {`${styles.signupForm}`}onSubmit={e => handleformSubmit(e)}>
-                <input className={`${styles.inputElement}`} ref={nameRef} type="text" name="uname" id="uname" placeholder='Name' autoComplete='off'/>
-                <input className={`${styles.inputElement}`} ref ={emailRef}type="text" name="uemail" id="email" placeholder='Email' autoComplete='off'/>
-                <input className={`${styles.inputElement}`} ref = {passwdRef} type="password" name="upasswd" id="upasswd" placeholder='Password'autoComplete='off' />
-                <input className={styles.neonButton}type="submit" value="Sign Up" />
-                <p className={styles.text}>Already Signed up? <Link to="/login">Login</Link></p>
-                <div style={{background:"red"}}>{errorString}</div>
-            </form>
+          <form
+            className={`${styles.signupForm}`}
+            onSubmit={(e) => handleformSubmit(e)}
+          >
+            <input
+              className={`${styles.inputElement}`}
+              ref={nameRef}
+              type="text"
+              name="uname"
+              id="uname"
+              placeholder="Name"
+              autoComplete="off"
+            />
+            <input
+              className={`${styles.inputElement}`}
+              ref={emailRef}
+              type="text"
+              name="uemail"
+              id="email"
+              placeholder="Email"
+              autoComplete="off"
+            />
+            <input
+              className={`${styles.inputElement}`}
+              ref={passwdRef}
+              type="password"
+              name="upasswd"
+              id="upasswd"
+              placeholder="Password"
+              autoComplete="off"
+            />
+            <input
+              className={styles.neonButton}
+              type="submit"
+              value="Sign Up"
+            />
+            <p className={styles.text}>
+              Already Signed up? <Link to="/login">Login</Link>
+            </p>
+            <div style={{ background: "red" }}>{errorString}</div>
+          </form>
         </div>
-        </div>
-    )
-}
+      )}
+    </div>
+  );
+};
 export default SignUp;
