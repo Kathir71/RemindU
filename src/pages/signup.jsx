@@ -3,6 +3,7 @@ import { useRef, useState} from "react";
 import { Link , useNavigate} from "react-router-dom";
 import styles from "./Signup.module.css";
 import Loaders from "../components/Loaders";
+import { signupApi } from "../api/userApi";
 const SignUp = () => {
   const nameRef = useRef(0);
   const emailRef = useRef(0);
@@ -10,31 +11,27 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [errorString, setErrorString] = useState(null);
   const [loading, setLoading] = useState(false);
-  const handleformSubmit = (e) => {
+  const handleformSubmit = async(e) => {
     e.preventDefault();
     let uname = nameRef.current.value;
     let uemail = emailRef.current.value;
     let upasswd = passwdRef.current.value;
-    console.log(`The username is ${uname} email: ${uemail} passwd: ${upasswd}`);
     setLoading(true);
-    axios
-      .post("http://localhost:8090/user/signup", {
-        username: uname,
-        useremail: uemail,
-        userpasswd: upasswd,
-      })
-      .then((response) => {
-        console.log(response);
+    const response = await signupApi({
+      username:uname , 
+      useremail:uemail , 
+      userpasswd:upasswd});
+      if(response.status === 200){
         sessionStorage.clear();
         sessionStorage.setItem("userId", response.data._id);
         setLoading(false);
         navigate("/tasks");
-      })
-      .catch((err) => {
+      }
+      else{
         console.log(err.message);
         setErrorString("Email has been already taken");
         setLoading(false);
-      });
+      }
   };
   return (
     <div className={`${styles.bodyWrapper}`}>

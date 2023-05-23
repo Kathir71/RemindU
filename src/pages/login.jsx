@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Loaders from "../components/Loaders";
 import { AuthContext } from "../contexts/Authcontext";
+import { loginApi } from "../api/userApi";
 
 import styles from "./Login.module.css";
 const Login = () => {
@@ -13,27 +14,25 @@ const Login = () => {
   const navigate = useNavigate();
   const [ErrorString, setErrorString] = useState(null);
   const [loading, setLoading] = useState(false);
-  const handleLogin = (e) => {
+  const handleLogin = async(e) => {
     setLoading(true);
     e.preventDefault();
-    axios
-      .post("http://localhost:8090/user/login", {
+    const response = await loginApi({
         userEmail: uemailRef.current.value,
         userPassword: upasswdRef.current.value,
-      })
-      .then((response) => {
+      });
+    if (response.status === 200) {
         setLoading(false);
         setAuth(true);
         setUser(response.data[0]._id);
-        console.log(response.data[0]._id);
         sessionStorage.setItem("userId", response.data[0]._id);
         navigate("/tasks");
-      })
-      .catch((err) => {
+    }
+    else{
         setLoading(false);
         console.log("Error has occured");
         setErrorString("Email or password is incorred");
-      });
+      }
   };
   return (
     <>
