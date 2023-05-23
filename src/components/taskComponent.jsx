@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useState, useRef } from "react";
-import styles from "./taskComponent.module.css";
 import {MdOutlineDelete , MdOutlineModeEdit} from 'react-icons/md';
 import {BsFillCalendar2WeekFill} from 'react-icons/bs'
 import {BiTimeFive} from 'react-icons/bi'
+
+import { editTaskApi , deleteTaskApi } from "../api/taskApi";
+
+import styles from "./taskComponent.module.css";
 const TaskComponent = (props) => {
-  const { task, userId, setUserTasks } = props;
+  const { task, userId, setUserTasks , setEmpty} = props;
   const { taskString, taskDate, _id } = task;
   const dateString = new Date(taskDate).toLocaleString();
   const dateAlone = dateString.slice(0, dateString.indexOf(","));
@@ -21,38 +24,37 @@ const TaskComponent = (props) => {
   const handleEditClick = () => {
     setEditMode(true);
   };
-  const handleEdit = (e) => {
+  const handleEdit = async(e) => {
     e.preventDefault();
-    console.log("inside handle edit");
-    axios
-      .post("http://localhost:8090/editTask", {
-        userId: userId,
-        taskId: _id,
-        updatedTaskString: taskStringRef.current.value,
-        updatedTaskDate:
-          taskDateRef.current.value + "T" + taskTimeRef.current.value,
-      })
-      .then((response) => {
-        setEditMode(false);
-        console.log(setUserTasks);
-        console.log(response.data);
-        setUserTasks(response.data.userTasks);
-      }).catch((err) => {
-        console.log(err);
-        setErrorState("Invalid date and time");
-      })
-  };
-  const handleDelete = (e) => {
+    const response = await editTaskApi({
+      userId: userId,
+      taskId: _id,
+      updatedTaskString: taskStringRef.current.value,
+      updatedTaskDate:
+        taskDateRef.current.value + "T" + taskTimeRef.current.value,
+    });
+    if ( response.status === 200 ) {
+    setEditMode(false);
+    setUserTasks(response.data.userTasks);
+    } else {
+      setErrorState("Invalid date and time");
+    }
+      };
+  const handleDelete = async(e) => {
     e.preventDefault();
-    console.log("id is" + _id);
-    axios
-      .post("http://localhost:8090/deleteTask", {
-        user: userId,
-        taskId: _id,
-      })
-      .then((response) => {
-        setUserTasks(response.data.userTasks);
-      });
+    const response = await deleteTaskApi({
+      user:userId,
+      taskId:_id
+    });
+    if (response.status === 200) {
+      if ( response.data.userTasks.length === 0 ) {
+        setEmpty(true);
+      }
+      setUserTasks(response.data.userTasks);
+    }
+    else{
+      setErrorState("Error in deleting task");
+    }
   };
   return (
     <>

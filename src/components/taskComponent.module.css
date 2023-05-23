@@ -194,5 +194,13 @@ span {
     height: 100%;
   }
 }
-
+@media ( width < 800px){
+    .taskContainer {
+        flex-direction: column;
+    }
+    .btnGrp{
+      justify-content: space-around;
+      width: 100%;
+    }
+}
 

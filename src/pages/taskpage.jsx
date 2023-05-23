@@ -16,11 +16,8 @@ const TaskPage = () => {
   const taskDateRef = useRef(0);
   const taskTimeRef = useRef(0);
   const userId = sessionStorage.getItem("userId");
-  console.log("From taskPage" + userId);
   useEffect(() => {
     const response = fetchData();
-    console.log(response);
-    console.log(userId);
   }, []);
   const fetchData = async () => {
     setLoading(true);
@@ -34,13 +31,10 @@ const TaskPage = () => {
     setLoading(false);
   };
   const handleAddTaskClick = (e) => {
-    console.log("Changing mode");
     setAddMode(true);
   };
   const handleAddTask = async (e) => {
     e.preventDefault();
-    console.log(taskDateRef.current.value);
-    console.log(taskTimeRef.current.value);
     setLoading(true);
     const response = await addTaskApi({
       userId: userId,
@@ -181,6 +175,7 @@ const TaskPage = () => {
                   task={task}
                   userId={userId}
                   setUserTasks={setUserTasks}
+                  setEmpty={setEmpty}
                 />
               );
             })}

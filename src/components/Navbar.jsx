@@ -56,6 +56,13 @@ const Navbar = () => {
               Logout
             </button>
           </li>
+          <li>
+            <button className={styles.neonButton}>
+              <Link className = {styles.linkButton}to="/tasks">
+                Your tasks
+              </Link>
+            </button>
+          </li>
           </>
           }
         </ul>

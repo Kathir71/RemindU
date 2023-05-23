@@ -98,3 +98,8 @@
     margin-top:10px;
     font-size: 1.05rem;
 }
+@media ( width < 520px){
+    .mycard{
+        width: 90%;
+    }
+}

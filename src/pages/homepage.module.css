@@ -127,3 +127,8 @@ border-right:2px solid transparent;
 border-right:2px solid rgb(245, 240, 240);
 }
 }
+@media (width < 520px){
+    .heroText > *{
+        margin-left:1rem;
+    }
+}
