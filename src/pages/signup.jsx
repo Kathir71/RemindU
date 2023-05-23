@@ -28,7 +28,6 @@ const SignUp = () => {
         navigate("/tasks");
       }
       else{
-        console.log(err.message);
         setErrorString("Email has been already taken");
         setLoading(false);
       }
