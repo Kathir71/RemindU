@@ -1,7 +1,7 @@
 import api from "./axios";
 const signupUrl = "/user/signup";
 const loginUrl = "/user/login";
-export const signupApi = async(config , data) => {
+export const signupApi = async(data) => {
     try{
     const response = await api.post(signupUrl, data)
     console.log(response);

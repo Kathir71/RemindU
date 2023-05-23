@@ -13,10 +13,10 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const handleformSubmit = async(e) => {
     e.preventDefault();
+    setLoading(true);
     let uname = nameRef.current.value;
     let uemail = emailRef.current.value;
     let upasswd = passwdRef.current.value;
-    setLoading(true);
     const response = await signupApi({
       username:uname , 
       useremail:uemail , 

@@ -8,9 +8,9 @@ import { editTaskApi , deleteTaskApi } from "../api/taskApi";
 
 import styles from "./taskComponent.module.css";
 const TaskComponent = (props) => {
-  const { task, userId, setUserTasks , setEmpty} = props;
+  const { task, userId, setUserTasks , setEmpty , setLoading} = props;
   const { taskString, taskDate, _id } = task;
-  const dateString = new Date(taskDate).toLocaleString({TimeZone:"UTC"});
+  const dateString = new Date(taskDate).toLocaleString();
   const dateAlone = dateString.slice(0, dateString.indexOf(","));
   const timeAlone = dateString.slice(
     dateString.indexOf(",") + 1,
@@ -26,27 +26,33 @@ const TaskComponent = (props) => {
   };
   const handleEdit = async(e) => {
     e.preventDefault();
+    setLoading(true);
     const response = await editTaskApi({
       userId: userId,
       taskId: _id,
       updatedTaskString: taskStringRef.current.value,
       updatedTaskDate:
-        taskDateRef.current.value + "T" + taskTimeRef.current.value,
+        new Date(taskDateRef.current.value + "T" + taskTimeRef.current.value).toUTCString(),
     });
     if ( response.status === 200 ) {
     setEditMode(false);
+    setLoading(false);
+    console.log(response.data);
     setUserTasks(response.data.userTasks);
     } else {
+      setLoading(false);
       setErrorState("Invalid date and time");
     }
       };
   const handleDelete = async(e) => {
     e.preventDefault();
+    setLoading(true);
     const response = await deleteTaskApi({
       user:userId,
       taskId:_id
     });
     if (response.status === 200) {
+    setLoading(false);
       if ( response.data.userTasks.length === 0 ) {
         setEmpty(true);
       }
@@ -54,6 +60,7 @@ const TaskComponent = (props) => {
     }
     else{
       setErrorState("Error in deleting task");
+    setLoading(false);
     }
   };
   return (

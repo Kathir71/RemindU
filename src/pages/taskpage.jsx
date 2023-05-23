@@ -39,7 +39,7 @@ const TaskPage = () => {
     const response = await addTaskApi({
       userId: userId,
       taskString: taskStringRef.current.value,
-      taskDate: taskDateRef.current.value + "T" + taskTimeRef.current.value,
+      taskDate: new Date(taskDateRef.current.value + "T" + taskTimeRef.current.value).toUTCString(),
     });
     await fetchData();
     setLoading(false);
@@ -176,6 +176,7 @@ const TaskPage = () => {
                   userId={userId}
                   setUserTasks={setUserTasks}
                   setEmpty={setEmpty}
+                  setLoading={setLoading}
                 />
               );
             })}
