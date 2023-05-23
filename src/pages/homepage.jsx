@@ -7,11 +7,9 @@ import styles from "./homepage.module.css";
 const HomePage = () => {
   const [userId , setUserId] = useState();
     useEffect(() => {
-      console.log(sessionStorage.getItem("userId"));  
       const currUser = sessionStorage.getItem("userId");
       setUserId(currUser);
     },[]);
-      console.log("The user id is" + userId);
     return (
       <div className={`${styles.bodyWrapper}`}>
         <div className={`${styles.hero} row`}>

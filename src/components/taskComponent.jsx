@@ -10,7 +10,7 @@ import styles from "./taskComponent.module.css";
 const TaskComponent = (props) => {
   const { task, userId, setUserTasks , setEmpty} = props;
   const { taskString, taskDate, _id } = task;
-  const dateString = new Date(taskDate).toLocaleString();
+  const dateString = new Date(taskDate).toLocaleString({TimeZone:"UTC"});
   const dateAlone = dateString.slice(0, dateString.indexOf(","));
   const timeAlone = dateString.slice(
     dateString.indexOf(",") + 1,
